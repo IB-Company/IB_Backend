@@ -1,13 +1,13 @@
 from fastapi import FastAPI
 
+from controller import exchange_rate_controller
+from dotenv import load_dotenv
+import os
+
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+env_path = os.path.join(BASE_DIR, '.env')
+load_dotenv(dotenv_path=env_path, verbose=True)
+
 app = FastAPI()
-
-
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
-
-
-@app.get("/hello/{name}")
-async def say_hello(name: str):
-    return {"message": f"Hello {name}"}
+app.include_router(exchange_rate_controller.router)
